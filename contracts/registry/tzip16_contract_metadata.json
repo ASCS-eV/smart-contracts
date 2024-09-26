@@ -1,0 +1,26 @@
+{
+  "name": "DEMIM Verifiable Credentials Revocation Registry",
+  "description": "Decentralized Member Identity Management (DEMIM)\n\nA revocation registry for verifiable credentials (VCs) to track the validity status of digital identities created for the Decentralized Member Identity Management at the Automotive Solution Center for Simulation e.V.\n",
+  "version": "v1.1.0",
+  "license": {
+    "name": "Apache-2.0",
+    "details": "Apache License 2.0"
+  },
+  "authors":
+  [
+      "Automotive Solution Center for Simulation e.V. <'info@asc-s.de'>",
+      "vDL Digital Ventures GmbH <'info@vdl.digital'>"
+],
+  "homepage": "https://staging.identity.ascs.digital/",
+  "source":
+  {
+      "tools": ["Ligo >= 1.2.0"],
+      "location": "https://github.com/ASCS-eV/smart-contracts"
+    },
+  "interfaces": [
+    "TZIP-16",
+    "DID:PKH",
+    "RFC-9562",
+    "CAIP-10"
+  ]
+}

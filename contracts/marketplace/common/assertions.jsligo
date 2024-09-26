@@ -1,0 +1,81 @@
+#import "./errors.jsligo" "Errors"
+#import "./tzip12.datatypes.jsligo" "TZIP12Datatypes"
+#import "./tzip12.interfaces.jsligo" "TZIP12Interface"
+
+export type status = ["Active"] | ["Revoked"]
+export type Entry =
+@layout("comb")
+{
+  user: {
+    did: address,
+    uuid: string,
+    issuer: string,
+    status: status,
+  },
+  member: {
+    did: address,
+    status: status,
+    issuer: string,
+    uuid: string,
+  }
+};
+
+/**
+* Check if the Tx sender is the token's owner
+* @param owner : the address of the actual owner
+*/
+
+export const assert_update_permission = (owner: address): unit => {
+    return Assert.Error.assert(
+        (owner == (Tezos.get_sender())),
+        Errors.only_sender_manage_operators
+    )
+}
+
+/**
+* Check if the token id already exists
+* @param assets : the assets already minted
+* @param token_id : the token id to test 
+*/
+
+export const assert_asset_id_exists = (
+    supply: nat,
+) => {
+    return Assert.Error.assert(
+        supply == 0n,
+        Errors.token_id_already_exists
+    )
+};
+
+/**
+* Check if the sender is allowed to mint
+*/
+
+export const assert_minting_allowed = (from_uuid: string, member_did: address, registry_address: address) => {
+    // Check demim contract
+    const entryOpt: option<{
+        member: {
+            did: address,
+            status: ["Active"] | ["Revoked"],
+            issuer: string,
+            uuid: string,
+        },
+        user: {
+            did: address,
+            status: ["Active"] | ["Revoked"],
+            issuer: string,
+            uuid: string,
+        }
+    }> = Tezos.Next.View.call(
+        "get_entry",
+        [from_uuid, member_did],
+        registry_address
+    );
+
+    const entry = Option.value_with_error(Errors.minting_not_allowed, entryOpt);
+
+    return Assert.Error.assert(
+        Tezos.get_sender() == entry.user.did,
+        "B"
+    );
+}

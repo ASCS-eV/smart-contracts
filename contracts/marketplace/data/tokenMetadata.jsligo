@@ -1,0 +1,22 @@
+#import "./token.jsligo" "Token"
+
+export type data = {
+    token_id  : Token.T;
+    token_info: map<string, bytes>;
+};
+
+export type T = big_map<nat, data>;
+
+export const get_token_info = (tokenId: Token.T, tokenMetadata: T, ): map<string, bytes> => {
+    return match(Big_map.find_opt(tokenId, tokenMetadata)) {
+        when(Some(token)): do { return token.token_info };
+        when(None()): do { return Map.empty };
+    };
+};
+
+export const set_token_info = (tokenId: Token.T, tokenInfo: map<string, bytes>, tokenMetadata: T): T => {
+    return Big_map.update(tokenId, Some({
+        token_id: tokenId,
+        token_info: tokenInfo
+    }), tokenMetadata);
+};

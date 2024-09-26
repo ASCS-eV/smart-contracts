@@ -1,0 +1,121 @@
+#import "../data/amount.jsligo" "Amount"
+#import "../data/errors.jsligo" "Errors"
+#import "../data/ledger.jsligo" "Ledger"
+#import "../data/storage.jsligo" "Storage"
+#import "../data/token.jsligo" "Token"
+#import "../data/tokenMetadata.jsligo" "TokenMetadata"
+#import "../common/assertions.jsligo" "Assertions"
+#import "../common/errors.jsligo" "Errors"
+
+type Storage = Storage.T;
+type LedgerModule = Ledger.ledger_module;
+
+export type MintParam = 
+@layout("comb")
+{
+  from_uuid   : string;
+  to_         : address;
+  token_id    : Token.T;
+  amount      : Amount.T;
+  token_info  : option<map<string, bytes>>;
+};
+
+type total_supply_update_type =
+@layout("comb")
+{
+  token_id: Token.T,
+  new_total_supply: nat,
+  diff: int
+};
+
+type balance_event_data =
+@layout("comb")
+{
+  owner: address,
+  token_id: nat,
+  new_balance: nat,
+  diff: int
+};
+
+type metadata_update_type =
+@layout("comb")
+{
+  token_id: Token.T,
+  new_metadata: option<map<string, bytes>>
+};
+
+type Mint = MintParam;
+export type T = MintParam;
+
+export const mint = <L>(
+  mint: Mint,
+  storage: Storage<L>,
+  ledger: LedgerModule<L>
+): [list<operation>, Storage<L>] => {
+  let operations = list([]);
+  let finalOperations = list([]);
+  // Assert.Error.assert(storage.extension.admin == Tezos.get_sender(), Errors.not_admin);
+
+  // Assert is user allowed to mint
+  Assertions.assert_minting_allowed(mint.from_uuid, mint.to_, storage.registry);
+
+  let oldSupplyOpt = Ledger.get_supply( mint.token_id, ledger);
+  let oldSupply = match(oldSupplyOpt) {
+    when (Some(supply)): do { return supply; };
+    when (None): do { return (0 as nat); };
+  };
+
+  Assertions.assert_asset_id_exists(oldSupply);
+  
+  const balance = Ledger.get_for_user(mint.to_, mint.token_id, ledger);
+  const supply_update: total_supply_update_type =
+                {
+                   token_id: mint.token_id,
+                   new_total_supply: mint.amount + oldSupply,
+                   diff: int(mint.amount),
+               };
+  const balance_update: balance_event_data =
+                {
+                   owner: mint.to_,
+                   token_id: mint.token_id,
+                   new_balance: balance + mint.amount,
+                   diff: int(mint.amount),
+               };
+  const event_balance = Tezos.emit("%balance_update", balance_update);
+  const event_supply = Tezos.emit("%total_supply_update", supply_update);
+  let new_token_info = match (mint.token_info) {
+    when (Some(token_metadata)): do { return token_metadata; };
+    when (None): do { return Map.empty; };
+  };
+  let token_info = TokenMetadata.get_token_info(mint.token_id, storage.token_metadata);
+  let newTokenMetadata = TokenMetadata.set_token_info(mint.token_id, token_info, storage.token_metadata);
+  if (Map.size(token_info) == (0 as nat) && Map.size(new_token_info) == (0 as nat)) {
+    token_info = Option.value_with_error("Token info must be provided", mint.token_info);
+  };
+  if(Map.size(new_token_info) > (0 as nat)) {
+    newTokenMetadata = TokenMetadata.set_token_info(mint.token_id, new_token_info, storage.token_metadata);
+    const metadata_event_data: metadata_update_type = {
+      token_id: mint.token_id,
+      new_metadata: mint.token_info
+    }
+    const metadata_event = Tezos.emit("%token_metadata_update", { metadata_event_data });
+    operations = list([metadata_event, ...operations]);
+  }
+  const newLedger = Ledger.increase_token_amount_for_user(mint.to_, mint.token_id, mint.amount, ledger);
+  operations = list([event_supply, ...operations]);
+  operations = list([event_balance, ...operations]);
+
+  /** Reverse operations list **/
+
+  for (const op of operations) {    
+    finalOperations = list([op, ...finalOperations]);
+  }
+  
+  return [
+    finalOperations,
+    Storage.set_ledger(
+      Storage.set_token_metadata(storage, newTokenMetadata),
+      newLedger.data
+    )
+  ];
+};

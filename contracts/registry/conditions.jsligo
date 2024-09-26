@@ -1,0 +1,22 @@
+#import "errors.jsligo" "Errors"
+#import "storage.jsligo" "Storage"
+
+export namespace Guards {
+  export const caller_is_trust_anchor = (trust_anchor_did: address) : unit =>
+    Assert.Error.assert(
+      Tezos.get_sender() == trust_anchor_did,
+      Errors.incorrect_sender
+    );
+
+  export const account_is_active = (account_status: Storage.Types.status) : unit =>
+    Assert.Error.assert(
+      account_status == Active(),
+      Errors.inactive_account
+    );
+
+  export const caller_is_parent_member = ([uuid, member]: [string, Storage.Types.member_credential_record]) : unit => 
+    Assert.Error.assert(
+      member.uuid == uuid,
+      Errors.incorrect_sender
+    );
+}

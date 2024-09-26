@@ -1,0 +1,82 @@
+#import "./registry.jsligo" "Registry"
+#import "./storage.jsligo" "Storage"
+#import "./errors.jsligo" "Errors"
+#import "./utils.jsligo" "Utils"
+
+const store_mock = {
+  member_registry: Big_map.literal(list([
+    [("tz1hkMbkLPkvhxyqsQoBoLPqb1mruSzZx3zy" as address), ({
+      did: "tz1hkMbkLPkvhxyqsQoBoLPqb1mruSzZx3zy" as address,
+      status: Active(),
+      issuer: "urn:uuid:1b752c7f-3de3-1759-bce2-46416a6823e8",
+      uuid: "urn:uuid:ecb5685d-0708-4fa8-b9e4-966a0f1d12ff"
+    })]
+  ])),
+  trust_anchor: {
+    did: "tz1ggujjYjA7oYoaZBzTg1tYSXn3VMjcgDuv" as address,
+    status: Active(),
+    uuid: "urn:uuid:1b752c7f-3de3-1759-bce2-46416a6823e8"
+  },
+  // member_registry: (Big_map.empty as big_map<address, Storage.Types.member_credential_record>),
+  user_registry: (Big_map.empty as big_map<string, Storage.Types.user_credential_record>)
+}
+
+const _add_user = () : unit => {
+  const initial_storage = store_mock;
+  const user = Test.Next.Account.info(0 as nat);
+  const member = Test.Next.Account.info(1 as nat);
+  Test.Next.IO.log(member.addr);
+  const orig = Test.Next.Originate.contract(contract_of(Registry), initial_storage, 1000000 as tez);
+  const _contr = Test.Next.Typed_address.to_contract(orig.taddr);
+  Test.Next.State.set_source(member.addr);
+  let tx = Test.Next.Typed_address.transfer(orig.taddr, Add_user(["urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab", user.addr, "urn:uuid:ecb5685d-0708-4fa8-b9e4-966a0f1d12ff"]), 0 as mutez);
+  Test.Next.IO.log(tx);
+}
+
+const test_add_user = _add_user();
+
+const get_permissions = () : unit => {
+  Test.Next.IO.log("get_permissions");
+  const initial_storage = store_mock;
+  const user = Test.Next.Account.info(0 as nat);
+  const info = Test.Next.Account.info(1 as nat);
+  
+  const orig = Test.Next.Originate.contract(contract_of(Registry), initial_storage, 1000000 as tez);
+  Test.Next.State.set_source(info.addr);
+  Test.Next.IO.log(orig.taddr);
+  let tx = Test.Next.Typed_address.transfer(orig.taddr, Add_user(["urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab", user.addr, "urn:uuid:ecb5685d-0708-4fa8-b9e4-966a0f1d12ff"]), 0 as mutez);
+  Test.Next.IO.log(tx);
+  Test.Next.IO.log(Test.Next.to_address(orig.taddr));
+
+  const new_storage = Test.Next.Typed_address.get_storage(orig.taddr);
+
+  const permissions = Utils.User.get_permissions("urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab", "tz1hkMbkLPkvhxyqsQoBoLPqb1mruSzZx3zy" as address, new_storage);
+  Test.Next.IO.log(permissions);
+  return Assert.assert(Test.Next.Compare.eq(permissions, true));
+}
+
+const test_get_permissions = get_permissions();
+
+const get_entry = () : unit => {
+  const initial_storage = store_mock;
+  const user = Test.Next.Account.info(0 as nat);
+  const info = Test.Next.Account.info(1 as nat);
+  
+  const orig = Test.Next.Originate.contract(contract_of(Registry), initial_storage, 1000000 as tez);
+  Test.Next.State.set_source(info.addr);
+  Test.Next.IO.log(orig.taddr);
+  let tx = Test.Next.Typed_address.transfer(orig.taddr, Add_user(["urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab", user.addr, "urn:uuid:ecb5685d-0708-4fa8-b9e4-966a0f1d12ff"]), 0 as mutez);
+  Test.Next.IO.log(tx);
+  Test.Next.IO.log(Test.Next.to_address(orig.taddr));
+
+  const new_storage = Test.Next.Typed_address.get_storage(orig.taddr);
+
+  // const entry = Utils.Entry.get_entry("urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab", "tz1hkMbkLPkvhxyqsQoBoLPqb1mruSzZx3zy" as address, new_storage);
+  const entry = Utils.Entry.get_entry("urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab", "tz1hkMbkLPkvhxyqsQoBoLPqb1mruSzZx3zy" as address, new_storage);
+
+  const expected_member = {did:  "tz1hkMbkLPkvhxyqsQoBoLPqb1mruSzZx3zy" as address ; issuer: "urn:uuid:1b752c7f-3de3-1759-bce2-46416a6823e8" ; status: Active() ; uuid: "urn:uuid:ecb5685d-0708-4fa8-b9e4-966a0f1d12ff"}
+  const expected_user: Storage.Types.user_credential_record = {did: user.addr; issuer: "urn:uuid:ecb5685d-0708-4fa8-b9e4-966a0f1d12ff" ; status: Active() ; uuid: "urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab"};
+  return Assert.assert(Test.Next.Compare.eq(entry, { member: expected_member ; user: expected_user }));
+}
+
+const test_get_entry = get_entry();

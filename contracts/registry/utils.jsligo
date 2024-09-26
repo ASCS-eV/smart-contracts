@@ -1,0 +1,99 @@
+#import "storage.jsligo" "Storage"
+
+export namespace TrustAnchor {
+  export const get_trust_anchor_did = (store: Storage.Types.store) => store.trust_anchor.did
+  export const get_account_status = (store: Storage.Types.store) => store.trust_anchor.status
+  export const get_trust_anchor_uuid = (store: Storage.Types.store) => store.trust_anchor.uuid
+}
+
+export namespace Member {
+  export const get_member = (store: Storage.Types.store) => {
+    const caller = Tezos.get_sender();
+    return match(Big_map.find_opt(caller as address, store.member_registry)) {
+      when(Some(member)): member
+      when(None()): failwith("Member not found") as Storage.Types.member_credential_record
+    };
+  }
+
+  export const add_member = (record: Storage.Types.member_credential_record, store: Storage.Types.store) => {
+    return {
+      ...store,
+      member_registry: Big_map.add(record.did, record, store.member_registry)
+    }  
+  }
+
+  export const revoke_member_credentials = (did: address, store: Storage.Types.store) => {
+    const member = match(Big_map.find_opt(did, store.member_registry)) {
+      when(Some(member)): member
+      when(None()): failwith("Member not found") as Storage.Types.member_credential_record
+    };
+    return {
+      ...store,
+      member_registry: Big_map.update(did, Some({
+        ...member,
+        status: Revoked(),
+      }), store.member_registry)
+    }
+  }
+}
+
+export namespace User {
+  export const add_user = (record: Storage.Types.user_credential_record, store: Storage.Types.store) => {
+    return {
+      ...store,
+      user_registry: Big_map.add(record.uuid, record, store.user_registry)
+    }
+  }
+
+  export const revoke_user_credentials = (uuid: string, store: Storage.Types.store) => {
+    const user = match(Big_map.find_opt(uuid, store.user_registry)) {
+      when(Some(user)): user
+      when(None()): failwith("User not found") as Storage.Types.user_credential_record
+    };
+    return {
+      ...store,
+      user_registry: Big_map.update(uuid, Some({
+        ...user,
+        status: Revoked(),
+      }), store.user_registry)
+    }
+  }
+
+  export const get_permissions = (uuid: string, member_address: address, store: Storage.Types.store) => {
+    const user = match(Big_map.find_opt(uuid, store.user_registry)) {
+      when(Some(user)): user
+      when(None()): failwith("User not found") as Storage.Types.user_credential_record
+    };
+
+    const member = match(Big_map.find_opt(member_address, store.member_registry)) {
+      when(Some(member)): member
+      when(None()): failwith("Member not found") as Storage.Types.member_credential_record
+    };
+
+    if (member.uuid != user.issuer) {
+      failwith("Member is not the issuer of the user");
+    };
+
+    return user.status == Active() && member.status == Active();
+  }
+}
+
+export namespace Entry {
+  export const get_entry = (uuid: string, member_address: address, store: Storage.Types.store) => {
+    const user = match(Big_map.find_opt(uuid, store.user_registry)) {
+      when(Some(user)): user
+      when(None()): failwith("User not found") as Storage.Types.user_credential_record
+    };
+
+    const member = match(Big_map.find_opt(member_address, store.member_registry)) {
+      when(Some(member)): member
+      when(None()): failwith("Member not found") as Storage.Types.member_credential_record
+    };
+
+    if (member.uuid != user.issuer) {
+      failwith("Member is not the issuer of the user");
+    };
+
+    return { user, member };
+  }
+}

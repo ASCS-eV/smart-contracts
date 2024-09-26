@@ -1,0 +1,85 @@
+#import "conditions.jsligo" "Conditions"
+#import "storage.jsligo" "Storage"
+#import "utils.jsligo" "Utils"
+
+@entry
+const add_member = ([ uuid, did ]: [ string, address ], store: Storage.Types.store): Storage.Types.return_ => {
+  // guard: is contract called by trust_anchor
+  const trust_anchor_did = Utils.TrustAnchor.get_trust_anchor_did(store);
+  Conditions.Guards.caller_is_trust_anchor(trust_anchor_did);
+
+  // guard: trust anchor is active
+  const account_status = Utils.TrustAnchor.get_account_status(store);
+  Conditions.Guards.account_is_active(account_status);
+
+  const trust_anchor_uuid = Utils.TrustAnchor.get_trust_anchor_uuid(store);
+
+  const record = {
+    did,
+    uuid,
+    status: Active(),
+    issuer: trust_anchor_uuid,
+  };
+
+  const new_store = Utils.Member.add_member(record, store);
+  const member_added = Tezos.emit("%member_added", record);
+  return [list([member_added]), new_store];
+}
+
+@entry
+const add_user = ([user_uuid, user_did, parent_uuid]: [string, address, string], store: Storage.Types.store): Storage.Types.return_ => {
+  const member = Utils.Member.get_member(store);
+  
+  // guard: is contract called by parent member
+  // guard: is parent member active
+  Conditions.Guards.caller_is_parent_member([parent_uuid, member]);
+  Conditions.Guards.account_is_active(member.status);
+
+  const record: Storage.Types.user_credential_record = {
+    did: user_did,
+    uuid: user_uuid,
+    status: Active(),
+    issuer: parent_uuid,
+  };
+
+  const new_store = Utils.User.add_user(record, store);
+  const user_added = Tezos.emit("%user_added", record);
+  return [list([user_added]), new_store];
+}
+
+@entry
+const revoke_member_credentials = (did: address, store: Storage.Types.store): Storage.Types.return_ => {
+  // guard: is contract called by trust_anchor
+  const trust_anchor_did = Utils.TrustAnchor.get_trust_anchor_did(store);
+  Conditions.Guards.caller_is_trust_anchor(trust_anchor_did);
+
+  const new_store = Utils.Member.revoke_member_credentials(did, store);
+  const member_revoked = Tezos.emit("%member_revoked", did);
+  return [list([member_revoked]), new_store];
+}
+
+@entry
+const revoke_user_credentials = ([user_uuid, parent_uuid]: [string, string], store: Storage.Types.store): Storage.Types.return_ => {
+  const member = Utils.Member.get_member(store);
+  
+  // guard: is contract called by parent member
+  // guard: is member account active
+  Conditions.Guards.caller_is_parent_member([parent_uuid, member]);
+  Conditions.Guards.account_is_active(member.status);
+
+  const new_store = Utils.User.revoke_user_credentials(user_uuid, store);
+  const user_revoked = Tezos.emit("%user_revoked", user_uuid);
+  return [list([user_revoked]), new_store];
+}
+
+@view
+const get_permissions = ([user_uuid, member_did]: [string, address], store: Storage.Types.store): bool => {
+  const permissions = Utils.User.get_permissions(user_uuid, member_did, store);
+  return permissions;
+}
+
+@view
+const get_entry = ([user_uuid, member_did], store: Storage.Types.store) => {
+  const record = Utils.Entry.get_entry(user_uuid, member_did, store);
+  return record;
+}
