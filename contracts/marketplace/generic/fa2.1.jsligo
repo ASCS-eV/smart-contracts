@@ -1,0 +1,67 @@
+/*
+ * DISCLAIMER
+ * This implementation of FA2.1 norm is work in progress, this implementation is not yet ready for production.
+ */
+
+export #import "../data/errors.jsligo" "Errors"
+export #import "../data/metadata.jsligo" "Metadata"
+export #import "../data/token.jsligo" "Token"
+export #import "../data/ledger.jsligo" "Ledger"
+export #import "../data/operators.jsligo" "Operators"
+export #import "../data/approvals.jsligo" "Approvals"
+export #import "../data/tokenMetadata.jsligo" "TokenMetadata"
+export #import "../data/storage.jsligo" "Storage"
+export #import "../entrypoints/transfer.jsligo" "Transfer"
+export #import "../entrypoints/balance_of.jsligo" "Balance_of"
+export #import "../entrypoints/update.jsligo" "Update"
+export #import "../entrypoints/approve.jsligo" "Approve"
+export #import "../entrypoints/mint.jsligo" "Mint"
+export #import "./views.jsligo" "Views"
+
+type LedgerModule = Ledger.ledger_module;
+export type Storage = Storage.T;
+
+// A is the extension for the storage
+// L is the ledger type
+
+export type Interface<L> = {
+   transfer: (ps : [Transfer.t, Storage<L>]) => [list<operation>, Storage<L>],
+   balance_of: (ps: [Balance_of.T, Storage<L>]) => [list<operation>, Storage<L>],
+   update_operators: (ps : [Update.T, Storage<L>]) => [list<operation>, Storage<L>],
+   approve: (ps : [Approve.T, Storage<L>]) => [list<operation>, Storage<L>],
+   mint: (ps : [Mint.T, Storage<L>]) => [list<operation>, Storage<L>],
+};
+
+export type InterfaceViews<L> = {
+   get_balance: (ps: [Views.get_balance_T, Storage<L>]) => Views.get_balance_R,
+   get_total_supply: (ps: [Views.get_total_supply_T, Storage<L>]) => Views.get_total_supply_R,
+   is_operator: (ps: [Views.is_operator_T, Storage<L>]) => Views.is_operator_R,
+   get_allowance: (ps: [Views.get_allowance_T, Storage<L>]) => Views.get_allowance_R,
+   get_token_metadata: (ps: [Views.get_token_metadata_T, Storage<L>]) => Views.get_token_metadata_R,
+   is_token: (ps: [Views.is_token_T, Storage<L>]) => Views.is_token_R,
+};
+
+export const make = <L>(makeLedger: (l: L) => LedgerModule<L>) : Interface<L> => {
+   const ledger = (s : Storage<L>) : LedgerModule<L> => makeLedger(s.assets);
+
+   return {
+      transfer:           ([p, s]) => Transfer.transfer(p, s, ledger(s)),
+      balance_of:         ([p, s]) => Balance_of.balance_of(p, s, ledger(s)),
+      update_operators:   ([p, s]) => Update.update_ops(p, s),
+      approve:            ([p, s]) => Approve.approve(p, s),
+      mint:               ([p, s]) => Mint.mint(p, s, ledger(s)),
+   };
+};
+
+export const makeViews = <L>(makeLedger: (l: L) => LedgerModule<L>) : InterfaceViews<L> => {
+   const ledger = (s : Storage<L>) : LedgerModule<L> => makeLedger(s.assets);
+
+   return {
+      get_balance:        ([p, s]) => Views.get_balance(p, s, ledger(s)),
+      get_total_supply:   ([p, s]) => Views.get_total_supply(p, s, ledger(s)),
+      is_operator:        ([p, s]) => Views.is_operator(p, s, ledger(s)),
+      get_allowance:      ([p, s]) => Views.get_allowance(p, s, ledger(s)),
+      get_token_metadata: ([p, s]) => Views.get_token_metadata(p, s, ledger(s)),
+      is_token:           ([p, s]) => Views.is_token(p, s, ledger(s)),
+   };
+};

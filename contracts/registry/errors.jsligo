@@ -1,0 +1,2 @@
+export const incorrect_sender = "Incorrect sender"
+export const inactive_account = "Inactive account"

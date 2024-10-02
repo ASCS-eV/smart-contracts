@@ -1,0 +1,31 @@
+export namespace Types {
+  export type status = ["Active"] | ["Revoked"]
+
+  export type trust_anchor = {
+    did: address,
+    status: status,
+    uuid: string,
+  }
+
+  export type member_credential_record = {
+    did: address,
+    status: status,
+    issuer: string,
+    uuid: string,
+  }
+
+  export type user_credential_record = {
+    did: address,
+    status: status,
+    issuer: string,
+    uuid: string,
+  }
+
+  export type store = {
+    trust_anchor: trust_anchor,
+    member_registry: big_map<address, member_credential_record>,
+    user_registry: big_map<string, user_credential_record>,
+  }
+
+  export type return_ = [list<operation>, store]
+}

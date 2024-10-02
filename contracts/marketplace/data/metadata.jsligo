@@ -1,0 +1,15 @@
+/*
+{
+	"name":"",                            (* Contract name, recommended *)
+	"description":"",                     (* details information *)
+	"version":"",                         (* semver version number *)
+	"license":{"name":"", "details":""},  (* details is optional *)
+	"authors":[],                         (* List of authors with format "Name<'contact'>" *)
+	"homepage":"",                        (* URL for human-consumption *)
+	"source":{"tools":[], "location":""}, (* High-level language source *)
+	"interfaces":[],                      (* TZIP-XYZ others than TZIP-016 *)
+	"errors":[],                          (* List of errors translation object : {"error":<michelson>,"expension":<michelson>, "languages":[]} *)
+	"views":[]                            (* List of off-chain-view objects *)
+} */
+
+export type t = big_map<string, bytes>;
