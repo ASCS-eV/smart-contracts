@@ -1,0 +1,30 @@
+{
+  "name": "ENVITED-X Data Space: Asset Registration",
+  "description": "ENVITED-X Data Space\n\nA FA2.1 compliant contract to mint standardized assets in the GaiaX compliant data space with access restriction through the Decentralized Member Identity Management at the Automotive Solution Center for Simulation e.V.\n",
+  "version": "v1.0.0",
+  "license": {
+    "name": "Apache-2.0",
+    "details": "Apache License 2.0"
+  },
+  "authors":
+  [
+      "Automotive Solution Center for Simulation e.V. <'info@asc-s.de'>",
+      "vDL Digital Ventures GmbH <'info@vdl.digital'>"
+],
+  "homepage": "https://envited-x.net/",
+  "source":
+  {
+      "tools": ["Ligo >= 1.2.0"],
+      "location": "https://github.com/ASCS-eV/smart-contracts"
+    },
+  "interfaces": [
+    "TZIP-012",
+    "TZIP-016",
+    "TZIP-021",
+    "TZIP-026",
+    "EVE-003 https://github.com/ASCS-eV/EVES"
+  ],
+  "views": [
+    "get_balance"
+  ],
+}
