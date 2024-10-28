@@ -22,9 +22,9 @@
     "TZIP-016",
     "TZIP-021",
     "TZIP-026",
-    "EVE-003 https://github.com/ASCS-eV/EVES"
+    "EVES-003 https://github.com/ASCS-eV/EVES"
   ],
   "views": [
     "get_balance"
-  ],
+  ]
 }
