@@ -1,0 +1,65 @@
+{
+    "decimals": 0,
+    "isBooleanAmount": true,
+    "name": "TestfeldNiedersachsen_ALKS_ODR_sample",
+    "description": "simple hdmap example file on Testfeld Niedersachsen for ALKS scenario",
+    "tags": [
+      "GaiaX",
+      "ASCS",
+      "ENVITED-X",
+      "EVES",
+      "nft",
+      "ASAM OpenDRIVE"
+    ],
+    "minter": "tz1cZaiTjNSN7x4VZjTQGYBVz4p8eEcVcYkz",
+    "creators": [ "Automotive Solution Center for Simulation e.V." ],
+    "publishers": [ "Automotive Solution Center for Simulation e.V.", "ENVITED-X Data Space" ],
+    "date": "2024-10-29T00:00:00+00:00",
+    "type":"EVES-003 https://github.com/ASCS-eV/EVES",
+    "rights": "MPL-2.0",
+    "rightUri": "https://spdx.org/licenses/preview/MPL-2.0.html",
+    "language": "en",
+    "artifactUri": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
+    "identifier": "QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
+    "externalUri": "ipfs://QmU7TvL9afnY87ceyfX9vVPcKM4mNS1bpNN1CUQNjxZjvB",
+    "displayUri": "ipfs://QmPg2xq9HAH45tF9EhLfGpYvtjhRL1LnB2jrHx7WUxKDzg",
+    "formats": [
+      {
+        "uri": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
+        "hash": "QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
+        "mimeType": "application/zip",
+        "fileSize": 3158016,
+        "fileName": "QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS.zip"
+      },
+      {
+        "uri": "ipfs://QmU7TvL9afnY87ceyfX9vVPcKM4mNS1bpNN1CUQNjxZjvB",
+        "hash": "QmU7TvL9afnY87ceyfX9vVPcKM4mNS1bpNN1CUQNjxZjvB",
+        "mimeType": "application/json",
+        "fileSize": 8192,
+        "fileName": "domainMetadata.json"
+      },
+      {
+        "uri": "ipfs://QmPg2xq9HAH45tF9EhLfGpYvtjhRL1LnB2jrHx7WUxKDzg",
+        "hash": "QmPg2xq9HAH45tF9EhLfGpYvtjhRL1LnB2jrHx7WUxKDzg",
+        "mimeType": "image/png",
+        "dimensions": {
+          "value": "1095x850",
+          "unit": "px"
+        },
+        "fileSize": 2400256,
+        "fileName": "TestfeldNiedersachsen_ALKS_ODR_sample_01.png"
+      }
+    ],
+    "attributes": [
+      {
+        "name": "de.gaiax4plcaad.ontology-management-base.hdmap",
+        "value": "https://github.com/GAIA-X4PLC-AAD/ontology-management-base/blob/main/hdmap/",
+        "type": "uri"
+      },
+      {
+        "name": "de.gaiax4plcaad.ontology-management-base.manifest",
+        "value": "https://github.com/GAIA-X4PLC-AAD/ontology-management-base/blob/main/manifest/",
+        "type": "uri"
+      }
+    ]
+  }
