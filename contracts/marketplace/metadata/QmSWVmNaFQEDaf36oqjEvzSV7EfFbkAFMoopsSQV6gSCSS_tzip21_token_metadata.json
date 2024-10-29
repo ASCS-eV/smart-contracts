@@ -21,7 +21,7 @@
     "language": "en",
     "artifactUri": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
     "identifier": "QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
-    "externalUri": "ipfs://QmU7TvL9afnY87ceyfX9vVPcKM4mNS1bpNN1CUQNjxZjvB",
+    "externalUri": "ipfs://QmRteS2bP2jCcA8MVL4kdLGV5yzNPS85uNazWxWEY9Goff",
     "displayUri": "ipfs://QmPg2xq9HAH45tF9EhLfGpYvtjhRL1LnB2jrHx7WUxKDzg",
     "formats": [
       {
@@ -32,11 +32,11 @@
         "fileName": "QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS.zip"
       },
       {
-        "uri": "ipfs://QmU7TvL9afnY87ceyfX9vVPcKM4mNS1bpNN1CUQNjxZjvB",
-        "hash": "QmU7TvL9afnY87ceyfX9vVPcKM4mNS1bpNN1CUQNjxZjvB",
+        "uri": "ipfs://QmRteS2bP2jCcA8MVL4kdLGV5yzNPS85uNazWxWEY9Goff",
+        "hash": "QmRteS2bP2jCcA8MVL4kdLGV5yzNPS85uNazWxWEY9Goff",
         "mimeType": "application/json",
         "fileSize": 8192,
-        "fileName": "domainMetadata.json"
+        "fileName": "manifest.json"
       },
       {
         "uri": "ipfs://QmPg2xq9HAH45tF9EhLfGpYvtjhRL1LnB2jrHx7WUxKDzg",
@@ -57,9 +57,19 @@
         "type": "uri"
       },
       {
+        "name": "de.gaiax4plcaad.ontology-management-base.hdmap",
+        "value": "ipfs://QmU7TvL9afnY87ceyfX9vVPcKM4mNS1bpNN1CUQNjxZjvB",
+        "type": "application/json"
+      },
+      {
         "name": "de.gaiax4plcaad.ontology-management-base.manifest",
         "value": "https://github.com/GAIA-X4PLC-AAD/ontology-management-base/blob/main/manifest/",
         "type": "uri"
+      },
+      {
+        "name": "de.gaiax4plcaad.ontology-management-base.manifest",
+        "value": "ipfs://QmRteS2bP2jCcA8MVL4kdLGV5yzNPS85uNazWxWEY9Goff",
+        "type": "application/json"
       }
     ]
   }
