@@ -4,7 +4,7 @@
     "gx": "https://registry.lab.gaia-x.eu/development/api/trusted-shape-registry/v1/shapes/jsonld/trustframework#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "sh": "http://www.w3.org/ns/shacl#",
-    "manifest": "https://github.com/ASCS-eV/EVES/tree/onboarding/ontologyManifest/"
+    "manifest": "https://github.com/GAIA-X4PLC-AAD/ontology-management-base/tree/main/manifest/"
   },
   "@id": "did:web:registry.gaia-x.eu:Manifest:ZNh9Z-tHQpkpxJhNobhUVmauYxrfTAZdQy9L",
   "@type": "manifest:Manifest",
@@ -39,7 +39,7 @@
       "manifest:type": "license",
       "manifest:format": "md",
       "manifest:relativePath": {
-        "@value": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/LICENSE",
+        "@value": "https://metadata.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/LICENSE",
         "@type": "xsd:anyURI"
       }
     },
@@ -60,7 +60,7 @@
       "manifest:type": "documentation",
       "manifest:format": "pdf",
       "manifest:relativePath": {
-        "@value": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/documentation/TestfeldNiedersachsen_ALKS_ODR_sample_Documentation.pdf",
+        "@value": "https://metadata.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/documentation/TestfeldNiedersachsen_ALKS_ODR_sample_Documentation.pdf",
         "@type": "xsd:anyURI"
       }
     },
@@ -70,7 +70,7 @@
       "manifest:type": "documentation",
       "manifest:format": "txt",
       "manifest:relativePath": {
-        "@value": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/documentation/TestfeldNiedersachsen_ALKS_ODR_sample_Documentation_stats.txt",
+        "@value": "https://metadata.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/documentation/TestfeldNiedersachsen_ALKS_ODR_sample_Documentation_stats.txt",
         "@type": "xsd:anyURI"
       }
     },
@@ -80,7 +80,7 @@
       "manifest:type": "validation",
       "manifest:format": "txt",
       "manifest:relativePath": {
-        "@value": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/validation/qcReport.txt",
+        "@value": "https://metadata.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/validation/qcReport.txt",
         "@type": "xsd:anyURI"
       }
     },

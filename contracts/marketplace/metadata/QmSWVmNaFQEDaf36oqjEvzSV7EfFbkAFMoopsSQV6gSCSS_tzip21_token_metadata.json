@@ -9,7 +9,7 @@
       "ENVITED-X",
       "EVES",
       "nft",
-      "ASAM OpenDRIVE"
+      "ASAM OpenDRIVE 1.6"
     ],
     "minter": "tz1cZaiTjNSN7x4VZjTQGYBVz4p8eEcVcYkz",
     "creators": [ "Automotive Solution Center for Simulation e.V." ],
@@ -17,7 +17,7 @@
     "date": "2024-10-29T00:00:00+00:00",
     "type":"EVES-003 https://github.com/ASCS-eV/EVES",
     "rights": "MPL-2.0",
-    "rightUri": "https://spdx.org/licenses/preview/MPL-2.0.html",
+    "rightsUri": "https://spdx.org/licenses/preview/MPL-2.0.html",
     "language": "en",
     "artifactUri": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
     "identifier": "QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
