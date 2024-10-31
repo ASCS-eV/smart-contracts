@@ -52,8 +52,8 @@ Attributes not in the table are static and the same for every mint. Examples are
 | "minter"           | Member DID associated with user initiating the mint  | Returned by the View from the DEMIM revocation registry      |
 | "creators"         | Name of the company                                  | Taken from the company profile the user belongs to           |
 | "date"             | [System date-time][1]                                |                                                              |
-| "rights"           | manifest:licenseType                                 | Open-source license SPDX identifier OR "All rights reserved" |
-| "rightsUri"        | Link to full license definition                      | Full os license text OR policy smart contract                |
+| "rights"           | manifest:licenseType                                 | [SPDX identifier][2] "LicenseRef-Custom-Commercial-Agreement"|
+| "rightsUri"        | Link to full license definition                      | Full os license text URL OR policy smart contract            |
 | "artifactUri"      | https://assets.envited-x.net/Asset-CID               |                                                              |
 | "identifier"       | Asset-CID                                            |                                                              |
 | "externalUri"      | Uploaded domainMetadata.json to IPFS                 |                                                              |
@@ -62,3 +62,4 @@ Attributes not in the table are static and the same for every mint. Examples are
 | "attributes"       | Same as in example with IPFS CIDs+URL                | For other asset types hdmap would be exchanged               |
 
 [1]: https://json-schema.org/understanding-json-schema/reference/string#dates-and-times
+[2]: https://softwareengineering.stackexchange.com/a/450839/443441
