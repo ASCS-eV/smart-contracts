@@ -39,7 +39,7 @@
       "manifest:type": "license",
       "manifest:format": "md",
       "manifest:relativePath": {
-        "@value": "https://metadata.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/LICENSE",
+        "@value": "ipfs://QmPt3UiJj4br8Zv6Jkb6kzdie36jtJM6wBvpFF1nA2ZU4L",
         "@type": "xsd:anyURI"
       }
     },
