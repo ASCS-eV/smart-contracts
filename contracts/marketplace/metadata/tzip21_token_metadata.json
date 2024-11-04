@@ -16,27 +16,27 @@
     "publishers": [ "Automotive Solution Center for Simulation e.V.", "ENVITED-X Data Space" ],
     "date": "2024-10-29T00:00:00+00:00",
     "type":"EVES-003 https://github.com/ASCS-eV/EVES",
-    "rights": "LicenseRef-Provider-Specific",
-    "rightsUri": "ipfs://QmPt3UiJj4br8Zv6Jkb6kzdie36jtJM6wBvpFF1nA2ZU4L",
+    "rights": "MIT",
+    "rightsUri": "https://opensource.org/license/mit",
     "language": "en",
-    "artifactUri": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
-    "identifier": "QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
-    "externalUri": "ipfs://QmRteS2bP2jCcA8MVL4kdLGV5yzNPS85uNazWxWEY9Goff",
+    "artifactUri": "https://assets.envited-x.net/QmPwE3TS2hPxvCosUZJyF3RABMdKjT63K9fNroFMtqeEaH",
+    "identifier": "QmPwE3TS2hPxvCosUZJyF3RABMdKjT63K9fNroFMtqeEaH",
+    "externalUri": "ipfs://QmTWU55kxaMpzfxNiTRTA4juDsBa4gd5UZocshBWRUeoDW",
     "displayUri": "ipfs://QmPg2xq9HAH45tF9EhLfGpYvtjhRL1LnB2jrHx7WUxKDzg",
     "formats": [
       {
-        "uri": "https://assets.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
-        "hash": "QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS",
+        "uri": "https://assets.envited-x.net/QmPwE3TS2hPxvCosUZJyF3RABMdKjT63K9fNroFMtqeEaH",
+        "hash": "QmPwE3TS2hPxvCosUZJyF3RABMdKjT63K9fNroFMtqeEaH",
         "mimeType": "application/zip",
         "fileSize": 3158016,
-        "fileName": "QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS.zip"
+        "fileName": "QmPwE3TS2hPxvCosUZJyF3RABMdKjT63K9fNroFMtqeEaH.zip"
       },
       {
-        "uri": "ipfs://QmRteS2bP2jCcA8MVL4kdLGV5yzNPS85uNazWxWEY9Goff",
-        "hash": "QmRteS2bP2jCcA8MVL4kdLGV5yzNPS85uNazWxWEY9Goff",
+        "uri": "ipfs://QmTWU55kxaMpzfxNiTRTA4juDsBa4gd5UZocshBWRUeoDW",
+        "hash": "QmTWU55kxaMpzfxNiTRTA4juDsBa4gd5UZocshBWRUeoDW",
         "mimeType": "application/json",
         "fileSize": 8192,
-        "fileName": "manifest.json"
+        "fileName": "tzip21_asset_manifest.json"
       },
       {
         "uri": "ipfs://QmPg2xq9HAH45tF9EhLfGpYvtjhRL1LnB2jrHx7WUxKDzg",
@@ -68,7 +68,7 @@
       },
       {
         "name": "de.gaiax4plcaad.ontology-management-base.manifest",
-        "value": "ipfs://QmRteS2bP2jCcA8MVL4kdLGV5yzNPS85uNazWxWEY9Goff",
+        "value": "ipfs://QmTWU55kxaMpzfxNiTRTA4juDsBa4gd5UZocshBWRUeoDW",
         "type": "application/json"
       }
     ]
