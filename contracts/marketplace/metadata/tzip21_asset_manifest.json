@@ -49,7 +49,7 @@
       "manifest:type": "documentation",
       "manifest:format": "pdf",
       "manifest:path": {
-        "@value": "https://metadata.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/documentation/TestfeldNiedersachsen_ALKS_ODR_sample_Documentation.pdf",
+        "@value": "https://metadata.envited-x.net/QmPwE3TS2hPxvCosUZJyF3RABMdKjT63K9fNroFMtqeEaH/documentation/TestfeldNiedersachsen_ALKS_ODR_sample_Documentation.pdf",
         "@type": "xsd:anyURI"
       }
     },
@@ -59,7 +59,7 @@
       "manifest:type": "documentation",
       "manifest:format": "txt",
       "manifest:path": {
-        "@value": "https://metadata.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/documentation/TestfeldNiedersachsen_ALKS_ODR_sample_Documentation_stats.txt",
+        "@value": "https://metadata.envited-x.net/QmPwE3TS2hPxvCosUZJyF3RABMdKjT63K9fNroFMtqeEaH/documentation/TestfeldNiedersachsen_ALKS_ODR_sample_Documentation_stats.txt",
         "@type": "xsd:anyURI"
       }
     },
@@ -69,7 +69,7 @@
       "manifest:type": "validation",
       "manifest:format": "txt",
       "manifest:path": {
-        "@value": "https://metadata.envited-x.net/QmSWVmNaFQEDaf36oqjEvzSV7EfFbkAFMoopsSQV6gSCSS/validation/qcReport.txt",
+        "@value": "https://metadata.envited-x.net/QmPwE3TS2hPxvCosUZJyF3RABMdKjT63K9fNroFMtqeEaH/validation/qcReport.txt",
         "@type": "xsd:anyURI"
       }
     },
