@@ -42,7 +42,7 @@ export type InterfaceViews<L> = {
 };
 
 export const make = <L>(makeLedger: (l: L) => LedgerModule<L>) : Interface<L> => {
-   const ledger = (s : Storage<L>) : LedgerModule<L> => makeLedger(s.assets);
+   const ledger = (s : Storage<L>) : LedgerModule<L> => makeLedger(s.ledger);
 
    return {
       transfer:           ([p, s]) => Transfer.transfer(p, s, ledger(s)),
@@ -54,7 +54,7 @@ export const make = <L>(makeLedger: (l: L) => LedgerModule<L>) : Interface<L> =>
 };
 
 export const makeViews = <L>(makeLedger: (l: L) => LedgerModule<L>) : InterfaceViews<L> => {
-   const ledger = (s : Storage<L>) : LedgerModule<L> => makeLedger(s.assets);
+   const ledger = (s : Storage<L>) : LedgerModule<L> => makeLedger(s.ledger);
 
    return {
       get_balance:        ([p, s]) => Views.get_balance(p, s, ledger(s)),
