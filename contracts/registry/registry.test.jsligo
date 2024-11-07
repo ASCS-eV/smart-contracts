@@ -17,7 +17,7 @@ const store_mock = {
     status: Active(),
     uuid: "urn:uuid:1b752c7f-3de3-1759-bce2-46416a6823e8"
   },
-  // member_registry: (Big_map.empty as big_map<address, Storage.Types.member_credential_record>),
+  metadata: (Big_map.empty as big_map<string, bytes>), 
   user_registry: (Big_map.empty as big_map<string, Storage.Types.user_credential_record>)
 }
 

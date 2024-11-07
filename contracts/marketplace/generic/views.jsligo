@@ -22,10 +22,10 @@ export const get_total_supply = <L>(
     s: Storage<L>,
     ledgerModule: LedgerModule<L>
 ) : get_total_supply_R =>
-  Option.value(0n, ledgerModule.supply([s.assets, token_id]));
+  Option.value(0n, ledgerModule.supply([s.ledger, token_id]));
   
  /*{
-    return match(Big_map.find_opt(token_id, s.assets.supply)) {
+    return match(Big_map.find_opt(token_id, s.ledger.supply)) {
         when(Some(n)): do { return n };
         when(None): do { return 0n };
     };
@@ -39,7 +39,7 @@ export const get_balance = <L>(
     s: Storage<L>,
     ledgerModule: LedgerModule<L>
 ) : get_balance_R =>
-  ledgerModule.balance_of([s.assets, params.owner, params.token_id]);
+  ledgerModule.balance_of([s.ledger, params.owner, params.token_id]);
 
 export type is_token_T = Token.T;
 export type is_token_R = bool;
@@ -49,7 +49,7 @@ export const is_token = <L>(
     s: Storage<L>,
     ledgerModule: LedgerModule<L>
 ) : is_token_R =>
-    match (ledgerModule.supply([s.assets, token_id])) {
+    match (ledgerModule.supply([s.ledger, token_id])) {
         when(Some(_n)): true;
         when(None): false;
     };

@@ -10,14 +10,23 @@
 export type T<L> = {
     registry: address;
     metadata: Metadata.t;
-    assets: L;
+    ledger: L;
     token_metadata: TokenMetadata.T;
+    token_index: nat;
     operators: option<Operators.t>;
     approvals: Approvals.T;
 };
 
 export const token_exist = <L>(s: T<L>, token_id): bool => {
     return Big_map.mem(token_id, s.token_metadata);
+};
+
+export const get_token_index = <L>(s: T<L>): nat => {
+    return s.token_index;
+};
+
+export const set_next_token_index = <L>(s: T<L>): T<L> => {
+    return { ...s, token_index: s.token_index + 1n };
 };
 
 export const assert_token_exist = <L>(s: T<L>, token_id): unit => {
@@ -27,11 +36,11 @@ export const assert_token_exist = <L>(s: T<L>, token_id): unit => {
 };
 
 export const get_ledger = <L>(s: T<L>): L => {
-    return s.assets;
+    return s.ledger;
 };
 
 export const set_ledger = <L>(s: T<L>, ledger: L): T<L> => {
-    return { ...s, assets: ledger };
+    return { ...s, ledger: ledger };
 };
 
 export const get_operators = <L>(s: T<L>): option<Operators.t> => {

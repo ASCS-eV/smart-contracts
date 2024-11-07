@@ -1,4 +1,4 @@
-#import "./Marketplace.jsligo" "Contract"
+#import "./marketplace.jsligo" "Contract"
 #import "./data/tokenMetadata.jsligo" "TokenMetadata"
 
 #import "../registry/registry.jsligo" "Registry"
@@ -8,7 +8,8 @@
 const initial_storage = {
   registry: "KT1P2kUcD97mqQWi7WMJfJaWSKZ6yU7caGTh" as address,
   metadata: Big_map.empty as Contract.Generic.Metadata.t,
-  assets: Big_map.empty as Contract.Generic.Ledger.NFT.L,
+  token_index: 0 as nat,
+  ledger: Big_map.empty as Contract.Generic.Ledger.NFT.L,
   token_metadata: Big_map.empty as Contract.Generic.TokenMetadata.T,
   operators: Some(Big_map.empty as Contract.Generic.Operators.t),
   approvals: Big_map.empty as Contract.Generic.Approvals.T,
@@ -35,12 +36,13 @@ const registry_intial_storage = {
       issuer: "urn:uuid:ecb5685d-0708-4fa8-b9e4-966a0f1d12ff",
       uuid: "urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab"
     })]
-  ]))
+  ])),
+  metadata: Big_map.empty as RegistryStorage.Types.metadata,
 };
 
 const run_mint_test = () => {
     Test.Next.State.reset(3n, [] as list <tez>);
-    const _admin = Test.Next.Account.address(0n);
+    const _admin = Test.Next.Account.address(0);
     const bob = Test.Next.Account.address(1n);
     const alice = Test.Next.Account.address(2n);
 
@@ -61,6 +63,7 @@ const run_mint_test = () => {
         uuid: "urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab"
       })]
     ]));
+
     const registry = Test.Next.Originate.contract(contract_of(Registry), { ...registry_intial_storage, member_registry, user_registry }, 0tez);
     const registryAddress = Test.Next.Typed_address.to_address(registry.taddr);
 
@@ -70,8 +73,6 @@ const run_mint_test = () => {
     const args: Contract.Generic.Mint.MintParam = {
       from_uuid: "urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab",
       to_: bob as address,
-      token_id: 0n,
-      amount: 1n,
       token_info: Some(Map.literal([
         ["", bytes`ipfs://tokenMetadataCID`]
       ]))
@@ -83,12 +84,13 @@ const run_mint_test = () => {
     const new_storage = {
       registry: registryAddress as address,
       metadata: Big_map.empty as Contract.Generic.Metadata.t,
-      assets: Big_map.literal([
-        [0n, bob]
+      token_index: 1 as nat,
+      ledger: Big_map.literal([
+        [0 as nat, bob]
       ]) as Contract.Generic.Ledger.NFT.L,
       token_metadata: Big_map.literal([
-        [0n, {
-          token_id: 0n,
+        [0 as nat, {
+          token_id: 0 as nat,
           token_info: Map.literal([
             ["", bytes`ipfs://tokenMetadataCID`]
           ])
@@ -105,7 +107,7 @@ const test_mint = run_mint_test();
 
 const run_failed_minting_not_allowed_invalid_user_test = () => {
     Test.Next.State.reset(3n, [] as list <tez>);
-    const _admin = Test.Next.Account.address(0n);
+    const _admin = Test.Next.Account.address(0);
     const bob = Test.Next.Account.address(1n);
     const alice = Test.Next.Account.address(2n);
 
@@ -134,8 +136,6 @@ const run_failed_minting_not_allowed_invalid_user_test = () => {
     const args: Contract.Generic.Mint.MintParam = {
       from_uuid: "urn:uuid:INVALID_UUID", // invalid uuid
       to_: bob as address,
-      token_id: 0n,
-      amount: 1n,
       token_info: Some(Map.literal([
         ["", bytes`ipfs://tokenMetadataCID`]
       ]))
@@ -152,7 +152,7 @@ const test_failed_minting_not_allowed_invalid_user_test = run_failed_minting_not
 
 const run_failed_minting_not_allowed_inactive_member_test = () => {
     Test.Next.State.reset(3n, [] as list <tez>);
-    const _admin = Test.Next.Account.address(0n);
+    const _admin = Test.Next.Account.address(0);
     const bob = Test.Next.Account.address(1n);
     const alice = Test.Next.Account.address(2n);
 
@@ -181,8 +181,6 @@ const run_failed_minting_not_allowed_inactive_member_test = () => {
     const args: Contract.Generic.Mint.MintParam = {
       from_uuid: "urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab", // invalid uuid
       to_: bob as address,
-      token_id: 0n,
-      amount: 1n,
       token_info: Some(Map.literal([
         ["", bytes`ipfs://tokenMetadataCID`]
       ]))
@@ -199,7 +197,7 @@ const test_failed_minting_not_allowed_inactive_member_test = run_failed_minting_
 
 const run_failed_mint_not_NFT_test = () => {
     Test.Next.State.reset(3n, [] as list <tez>);
-    const _admin = Test.Next.Account.address(0n);
+    const _admin = Test.Next.Account.address(0);
     const bob = Test.Next.Account.address(1n);
     const alice = Test.Next.Account.address(2n);
 
@@ -228,8 +226,6 @@ const run_failed_mint_not_NFT_test = () => {
     const args: Contract.Generic.Mint.MintParam = {
       from_uuid: "urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab",
       to_: bob as address,
-      token_id: 0n,
-      amount: 2n,
       token_info: Some(Map.literal([
         ["", bytes`ipfs://tokenMetadataCID`]
       ]))
@@ -246,7 +242,7 @@ const test_failed_mint_not_NFT = run_failed_mint_not_NFT_test();
 
 const run_failed_mint_existing_token_test = () => {
     Test.Next.State.reset(3n, [] as list <tez>);
-    const _admin = Test.Next.Account.address(0n);
+    const _admin = Test.Next.Account.address(0);
     const bob = Test.Next.Account.address(1n);
     const alice = Test.Next.Account.address(2n);
 
@@ -275,8 +271,6 @@ const run_failed_mint_existing_token_test = () => {
     const args: Contract.Generic.Mint.MintParam = {
       from_uuid: "urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab",
       to_: bob as address,
-      token_id: 0n,
-      amount: 1n,
       token_info: Some(Map.literal([
         ["", bytes`ipfs://tokenMetadataCID`]
       ]))
@@ -294,7 +288,7 @@ const test_failed_mint_existing_token = run_failed_mint_existing_token_test();
 
 const run_test_transfer = () => {
     Test.Next.State.reset(3n, [] as list <tez>);
-    const _admin = Test.Next.Account.address(0n);
+    const _admin = Test.Next.Account.address(0);
     const bob = Test.Next.Account.address(1n);
     const alice = Test.Next.Account.address(2n);
 
@@ -324,8 +318,6 @@ const run_test_transfer = () => {
     const mint_args: Contract.Generic.Mint.MintParam = {
       from_uuid: "urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab",
       to_: bob as address,
-      token_id: 0n,
-      amount: 1n,
       token_info: Some(Map.literal([
         ["", bytes`ipfs://tokenMetadataCID`]
       ]))
@@ -337,7 +329,7 @@ const run_test_transfer = () => {
       from_: bob as address,
       txs: [{
         to_: alice as address,
-        token_id: 0n,
+        token_id: 0 as nat,
         amount: 1n
       }]
     }];
@@ -346,7 +338,7 @@ const run_test_transfer = () => {
     const _transfer_result = Test.Next.Contract.transfer_exn(Test.Next.Typed_address.get_entrypoint("transfer", orig.taddr), transfer_args, 0tez);
     const new_storage = Test.Next.Typed_address.get_storage(orig.taddr);
     
-    Assert.assert(Test.Next.Compare.eq(Big_map.find_opt(0n, new_storage.assets), Some(alice)));
+    Assert.assert(Test.Next.Compare.eq(Big_map.find_opt(0 as nat, new_storage.ledger), Some(alice)));
     return Assert.assert(Test.Next.Compare.eq(Test.Next.Typed_address.get_storage(orig.taddr), new_storage));
 };
 
@@ -354,7 +346,7 @@ const test_transfer = run_test_transfer();
 
 const run_test_update_operators = () => {
   Test.Next.State.reset(3n, [] as list <tez>);
-  const admin = Test.Next.Account.address(0n);
+  const admin = Test.Next.Account.address(0);
   const bob = Test.Next.Account.address(1n);
   const alice = Test.Next.Account.address(2n);
 
@@ -384,8 +376,6 @@ const run_test_update_operators = () => {
   const mint_args: Contract.Generic.Mint.MintParam = {
     from_uuid: "urn:uuid:c0597222-5b0f-49fc-8078-7cbdc738c4ab",
     to_: bob as address,
-    token_id: 0n,
-    amount: 1n,
     token_info: Some(Map.literal([
       ["", bytes`ipfs://tokenMetadataCID`]
     ]))
@@ -398,7 +388,7 @@ const run_test_update_operators = () => {
     AddOperator( {
       owner: bob as address,
       operator: admin as address,
-      token_id: 0n
+      token_id: 0 as nat
     })
   ];
 
@@ -406,7 +396,7 @@ const run_test_update_operators = () => {
   const _update_operators_result = Test.Next.Contract.transfer_exn(Test.Next.Typed_address.get_entrypoint("update_operators", orig.taddr), update_operators_args, 0tez);
   const new_storage = Test.Next.Typed_address.get_storage(orig.taddr);
 
-  return Assert.assert(Test.Next.Compare.eq(Big_map.find_opt([bob, 0n], Option.value_with_error("No Operators", new_storage.operators)), Some(Set.literal([admin]))));
+  return Assert.assert(Test.Next.Compare.eq(Big_map.find_opt([bob, 0 as nat], Option.value_with_error("No Operators", new_storage.operators)), Some(Set.literal([admin]))));
 }
 
 const test_update_operators = run_test_update_operators();
