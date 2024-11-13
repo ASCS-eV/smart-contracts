@@ -14,11 +14,11 @@ When uploading a file you have to rename your file e.g. *file* or *image* instea
 
 ## Privacy layer
 
-| manifest:accessRole  | ENVITED-X domain                                          | Comment                               |
-| -------------------- | --------------------------------------------------------- | ------------------------------------- |
-| "owner"              | https://assets.envited-x.net/Asset-CID                    | CID v1, signed URLs, Asset credential |
-| "registeredUser"     | https://metadata.envited-x.net/Asset-CID                  | CID v1, signed URLs, DEMIM credential |
-| "publicUser"         | ipfs://Asset-CID -> https://ipfs.envited-x.net/Asset-CID  | CID v1, public, indexer to new URL    |
+| manifest:accessRole  | ENVITED-X domain                                                  | Comment                               |
+| -------------------- | ----------------------------------------------------------------- | ------------------------------------- |
+| "owner"              | https://assets.envited-x.net/Asset-CID                            | CID v1, signed URLs, Asset credential |
+| "registeredUser"     | https://metadata.envited-x.net/Asset-CID                          | CID v1, signed URLs, DEMIM credential |
+| "publicUser"         | ipfs://Data-CID -> https://ipfs.envited-x.net/Asset-CID/Data-CID  | CID v1, public, indexer to new URL    |
 
 ## Asset validation
 
