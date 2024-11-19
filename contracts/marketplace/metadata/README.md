@@ -14,31 +14,72 @@ When uploading a file you have to rename your file e.g. *file* or *image* instea
 
 ## Privacy layer
 
-| manifest:accessRole  | ENVITED-X domain                                          | Comment                               |
-| -------------------- | --------------------------------------------------------- | ------------------------------------- |
-| "owner"              | https://assets.envited-x.net/Asset-CID                    | CID v1, signed URLs, Asset credential |
-| "registeredUser"     | https://metadata.envited-x.net/Asset-CID                  | CID v1, signed URLs, DEMIM credential |
-| "publicUser"         | ipfs://Asset-CID -> https://ipfs.envited-x.net/Asset-CID  | CID v1, public, indexer to new URL    |
+| manifest:accessRole  | ENVITED-X domain                                                  | Comment                               |
+| -------------------- | ----------------------------------------------------------------- | ------------------------------------- |
+| "owner"              | https://assets.envited-x.net/Asset-CID                            | CID v1, signed URLs, Asset credential |
+| "registeredUser"     | https://metadata.envited-x.net/Asset-CID                          | CID v1, signed URLs, DEMIM credential |
+| "publicUser"         | ipfs://Data-CID -> https://ipfs.envited-x.net/Asset-CID/Data-CID  | CID v1, public, indexer to new URL    |
 
-## Asset validation
+## Asset validation/creation steps
 
-1) Open asset.zip
-2) Validate manifest.json
-3) Locate all content referenced in manifest.json (file name is static)
-4) Locate domainMetadata.json (name according to manifest.json)
-5) Validate domainMetadata.json
-6) If all green, offer upload
-7) Calculate CID of asset.zip -> rename and store in bucket: https://assets.envited-x.net/Asset-CID
-8) Create copy of manifest.json named tzip21_asset_manifest.json for replacing relative paths with URLs
-9) Upload "publicUser" information to IPFS -> links in tzip21_asset_manifest.json
-10) Store "registeredUser" information in bucket: https://metadata.envited-x.net/Asset-CID -> links in tzip21_asset_manifest.json
-11) Create tzip21_token_metadata.json -> fill information according to mapping table
-12) Mint token
-13) Catch event with indexer -> store information in permanent DB
-14) Download "publicUser" information from IPFS to bucket: https://ipfs.envited-x.net/Asset-CID
-Download
+### (1) Client side pre-validation
 
-Note: The CID is the connecting identifier between all systems. If additional non-public information needs to be stored in the permanent DB that can only be known before the mint then the CID may help to associate information.
+* Drag and drop asset.zip into upload field
+* Open asset.zip on local computer
+* Validate manifest.json
+  1) Check json correctness with manifest shacle
+  2) Locate all content referenced in manifest.json (file name is static)
+  3) Differentiate between local and remote files (local = relative path in asset.zip, remote = https:// URL)
+  3) Locate domainMetadata.json (name according to manifest.json)
+* Validate domainMetadata.json
+  1) Read necessary shacles from domainMetadata.json context
+  2) Check json correctness with domain shacles
+
+### (2) Upload asset to ENVITED-X Data Space
+* On click "upload button"
+* Calculate CID of asset.zip
+* Rename asset.zip to CID.zip and store in bucket: https://assets.envited-x.net/Asset-CID
+* Store *registeredUser* information in bucket: https://metadata.envited-x.net/Asset-CID
+* Calculate CIDs with local function of all *publicUser* data
+* Create copy of manifest.json named tzip21_asset_manifest.json for replacing relative paths with URLs including ipfs://Data-CIDs
+* Remark: An integration/sanity check shall check if the local CID function returns the same result as the Pinata upload function
+
+### (3) Preview data
+* TBD
+
+### (4) Mint token
+* Upload "publicUser" information to IPFS -> links SHALL be the same as already in tzip21_asset_manifest.json
+* Upload  tzip21_asset_manifest.json t IPFS
+* Create tzip21_token_metadata.json -> fill information according to mapping table
+* Mint token
+
+### (5) Listener
+* Catch event with indexer -> store information in permanent DB
+* Download *publicUser* information from IPFS to bucket: https://ipfs.envited-x.net/Asset-CID
+
+## Database synchronization
+
+The CID is the connecting identifier between all systems. If additional non-public information needs to be stored in the permanent DB that can only be known before the mint then the CID may help to associate information. An additional unique ID is needed that is know pre-mint.
+
+We get an asset.zip and SHALL have no control its content. We do not know if it has been uploaded before and it is not the concern of the federator.
+
+We create the [tzip21_asset_manifest.json](https://github.com/ASCS-eV/smart-contracts/blob/main/contracts/marketplace/metadata/tzip21_asset_manifest.json) and have sole control over it. We can use this id to create a link between the token metadata and the ENVITED-X DB:
+
+```json
+"@id": "did:web:registry.gaia-x.eu:Manifest:ZNh9Z-tHQpkpxJhNobhUVmauYxrfTAZdQy9L",
+```
+
+This *@id* SHALL be replaced with a UUID for our DB:
+
+```json
+"@id": "urn:uuid:cf1f329d-9c4c-458e-ba0a-a762a296b79c",
+```
+
+The following combination makes it secure to sync between the smart contract and the DB:
+1) The contract DID (current Ghostnet contract):` did:tezos:NetXnHfVqm9iesp:KT1XC2fTBNqoafnrhEb7TuToRCzewgbHAhnA`
+2) The user DID is known on MINT
+3) The transaction signature validates against user did
+4) The tzip21 asset_manifest id: `"@id": "urn:uuid:cf1f329d-9c4c-458e-ba0a-a762a296b79c"`
 
 ## TZIP-21 rich metadata mapping
 
