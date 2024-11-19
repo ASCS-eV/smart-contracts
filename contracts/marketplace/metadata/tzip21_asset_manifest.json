@@ -6,7 +6,7 @@
     "sh": "http://www.w3.org/ns/shacl#",
     "manifest": "https://github.com/GAIA-X4PLC-AAD/ontology-management-base/tree/main/manifest/"
   },
-  "@id": "did:web:registry.gaia-x.eu:Manifest:ZNh9Z-tHQpkpxJhNobhUVmauYxrfTAZdQy9L",
+  "@id": "urn:uuid:896f0b9d-5626-4ddb-9d28-568f4af63603",
   "@type": "manifest:Manifest",
   "manifest:data": {
     "@type": "manifest:Data",
