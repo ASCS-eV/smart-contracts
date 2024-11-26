@@ -52,22 +52,22 @@
     ],
     "attributes": [
       {
-        "name": "de.gaiax4plcaad.ontology-management-base.hdmap",
+        "name": "de.gaiax4plcaad.ontology-management-base.hdmap.ontology",
         "value": "https://github.com/GAIA-X4PLC-AAD/ontology-management-base/blob/main/hdmap/",
         "type": "uri"
       },
       {
-        "name": "de.gaiax4plcaad.ontology-management-base.hdmap",
+        "name": "de.gaiax4plcaad.ontology-management-base.hdmap.metadata",
         "value": "ipfs://QmU7TvL9afnY87ceyfX9vVPcKM4mNS1bpNN1CUQNjxZjvB",
         "type": "application/json"
       },
       {
-        "name": "de.gaiax4plcaad.ontology-management-base.manifest",
+        "name": "de.gaiax4plcaad.ontology-management-base.manifest.ontology",
         "value": "https://github.com/GAIA-X4PLC-AAD/ontology-management-base/blob/main/manifest/",
         "type": "uri"
       },
       {
-        "name": "de.gaiax4plcaad.ontology-management-base.manifest",
+        "name": "de.gaiax4plcaad.ontology-management-base.manifest.metadata",
         "value": "ipfs://QmTWU55kxaMpzfxNiTRTA4juDsBa4gd5UZocshBWRUeoDW",
         "type": "application/json"
       }
