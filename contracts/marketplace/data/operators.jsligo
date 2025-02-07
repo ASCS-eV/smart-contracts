@@ -4,7 +4,7 @@
 type owner    = address;
 type operator = address;
 
-export type t = big_map<[owner, Token.T], set<operator>>;
+export type t = big_map<[owner, operator, Token.T], unit>;
 
 export const assert_authorisation = (
    from_ : address,
@@ -15,16 +15,12 @@ export const assert_authorisation = (
    if (sender_ == from_) {
       return;
    } else {
-      const authorized = match(Big_map.find_opt([from_, token_id], operators)) {
+      match(Big_map.find_opt([from_, sender_, token_id], operators)) {
          when(Some(v)): do { return v };
-         when(None): do { return Set.empty };
+         when(None): failwith(Errors.not_operator) as unit;
       };
       
-      if (Set.mem(sender_, authorized)) {
-         return;
-      } else {
-         failwith(Errors.not_operator);
-      }
+      return;
    };
 };
 
@@ -42,12 +38,7 @@ export const add_operator = (
       return operators;
    } else {
       assert_update_permission(owner);
-      let auth = match(Big_map.find_opt([owner, token_id], operators)) {
-         when(Some(v)): do { return v };
-         when(None): do { return Set.empty };
-      };
-      auth = Set.add(operator, auth);
-      return Big_map.update([owner, token_id], Some(auth), operators);
+      return Big_map.add([owner, operator, token_id], unit, operators);
    };
 };
 
@@ -61,15 +52,7 @@ export const remove_operator = (
       return operators;
    } else {
       assert_update_permission(owner);
-      let auth = match(Big_map.find_opt([owner, token_id], operators)) {
-         when(Some(v)): do { return v };
-         when(None): do { return Set.empty };
-      };
-      auth = Set.remove(operator, auth);
-      if (Set.size(auth) == (0 as nat)) {
-         return Big_map.remove([owner, token_id], operators);
-      } else {
-         return Big_map.update([owner, token_id], Some(auth), operators);
-      };
+      return Big_map.remove([owner, operator, token_id], operators);
+
    };
 };
