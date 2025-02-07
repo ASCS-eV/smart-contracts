@@ -43,5 +43,5 @@ The staging environment on the `develop` branch is deployed on [Tezos Ghostnet](
 ```text
 test account did: 'tz1KobLotv3nAgLJ65pyF8z1a3USbkqNeb4P'
 
-contractAddress: 'KT1XC2fTBNqoafnrhEb7TuToRCzewgbHAhnA'
+contractAddress: 'KT1PCaD2kmgCHy15wQ1gpqZUy9RLxyBVJdTF'
 ```
