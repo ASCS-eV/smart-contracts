@@ -4,8 +4,9 @@
 const default_storage: Contract.Storage = {
   registry: "KT1P2kUcD97mqQWi7WMJfJaWSKZ6yU7caGTh" as address,
   metadata: Big_map.empty,
-  assets: Big_map.empty,
+  ledger: Big_map.empty,
   token_metadata: Big_map.empty,
+  token_index: 0,
   operators: Some(Big_map.empty),
   approvals: Big_map.empty,
 }

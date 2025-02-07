@@ -93,8 +93,8 @@ export const is_operator = <L>(
 ) : is_operator_R => {
     return match(s.operators) {
         when(Some(operators)): do {
-            return match(Big_map.find_opt([params.owner, params.token_id], operators)) {
-                when(Some(operators)): do { return Set.mem(params.operator, operators) };
+            return match(Big_map.find_opt([params.owner, params.operator, params.token_id], operators)) {
+                when(Some): do { return true };
                 when(None): do { return false };
             };
          };
