@@ -1,6 +1,6 @@
 # Deployed smart contracts
 
-## DEMIM - Decentralized Member Identity Management 
+## DEMIM - Decentralized Member Identity Management
 
 ### Registry contact: Mainnet (https://identity.ascs.digital)
 
@@ -31,14 +31,16 @@ asc(s member uuid: 'urn:uuid:db6ae823-632d-4ae1-819d-6db52684c49a'
 
 contractAddress: 'KT1PaDvx6vApsvZchR7m3LCRQLJ1cR6C778y'
 ```
+
 ## ENVITED-X Data Space
 
 ### Marketplace contract: Mainnet (https://envited-x.net)
+
 There is currently no `main` branch deployment. The url is redirected to staging.
 
 ### Marketplace contract: Ghostnet (https://staging.envited-x.net)
 
-The staging environment on the `develop` branch is deployed on [Tezos Ghostnet](https://better-call.dev/ghostnet/KT1XC2fTBNqoafnrhEb7TuToRCzewgbHAhnA/operations) using the following information:
+The staging environment on the `develop` branch is deployed on [Tezos Ghostnet](https://better-call.dev/ghostnet/KT1PCaD2kmgCHy15wQ1gpqZUy9RLxyBVJdTF/operations) using the following information:
 
 ```text
 test account did: 'tz1KobLotv3nAgLJ65pyF8z1a3USbkqNeb4P'
