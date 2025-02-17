@@ -3,6 +3,7 @@
 ## Introduction
 
 This is a collection of the smart contracts as used in the ASCS ecosystem. It consists of:
+
 - The user registry
 - The Marketplace
 
@@ -42,6 +43,7 @@ Tests can be ran using the following commands:
 ```shell
 ligo run test --library . ./contracts/registry/registry.test.jsligo
 ```
+
 and
 
 ```shell
