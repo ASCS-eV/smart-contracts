@@ -20,7 +20,7 @@ contractAddress: 'KT1Pg3QK3ArXRou4HBhBTLKkbcpujsyudC92'
 
 ### Registry contact: Ghostnet (https://staging.identity.ascs.digital)
 
-The `staging` branch is deployed on [Tezos Ghostnet](https://better-call.dev/ghostnet/KT1FLSSRYNxGM3WSrhvFgwvm1opZC8Q23WFE/operations) using the following information maintained by the asc(s office:
+The `staging` branch is deployed on [Tezos Ghostnet](https://better-call.dev/ghostnet/KT1PaDvx6vApsvZchR7m3LCRQLJ1cR6C778y/operations) using the following information maintained by the asc(s office:
 
 ```text
 trust anchor did: 'tz1ZBYB7Lwmoc7xbwq59mHK4GbiPhfPaEo2g'
